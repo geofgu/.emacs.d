@@ -35,24 +35,11 @@
 ;; set local recipes
 (setq
  el-get-sources
- '((:name buffer-move
-	  :after (progn
-		   (global-set-key (kbd "<C-S-up>")     'buf-move-up)
-		   (global-set-key (kbd "<C-S-down>")   'buf-move-down)
-		   (global-set-key (kbd "<C-S-left>")   'buf-move-left)
-		   (global-set-key (kbd "<C-S-right>")  'buf-move-right)))
-
-   (:name smex
-	  :after (progn
-		   (setq smex-save-file "~/.emacs.d/.smex-items")
-		   (global-set-key (kbd "M-x") 'smex)
-		   (global-set-key (kbd "M-X") 'smex-major-mode-commands)))
-
-   (:name imenu-anywhere
+ '((:name imenu-anywhere  ;; outline
 	  :after (progn
 		   (global-set-key (kbd "C-.") 'imenu-anywhere)))
 
-   (:name fiplr
+   (:name fiplr ;; fuzzy find file
 	  :after (progn
 		   (global-set-key (kbd "C-,") 'fiplr-find-file)))
 
@@ -74,26 +61,26 @@
 		   (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 		   (global-set-key (kbd "C-<") 'mc/mark-all-like-this)))
 
-   (:name auto-complete-clang
-	  :after (progn
-		   (setq ac-auto-start nil)
-                   (setq ac-quick-help-delay 0.5)
-                   ;; (ac-set-trigger-key "TAB")
-                   ;; (define-key ac-mode-map  [(control tab)] 'auto-complete)
-                   (define-key ac-mode-map  [(control tab)] 'auto-complete)
-                   (defun my-ac-config ()
-                     (setq-default ac-sources '(ac-source-abbrev ac-source-dictionary ac-source-words-in-same-mode-buffers))
-                     (add-hook 'emacs-lisp-mode-hook 'ac-emacs-lisp-mode-setup)
-                     ;; (add-hook 'c-mode-common-hook 'ac-cc-mode-setup)
-                     (add-hook 'ruby-mode-hook 'ac-ruby-mode-setup)
-                     (add-hook 'css-mode-hook 'ac-css-mode-setup)
-                     (add-hook 'auto-complete-mode-hook 'ac-common-setup)
-                     (global-auto-complete-mode t))
-                   (defun my-ac-cc-mode-setup ()
-                     (setq ac-sources (append '(ac-source-clang ac-source-yasnippet) ac-sources)))
-                   (add-hook 'c-mode-common-hook 'my-ac-cc-mode-setup)
-                   ;; ac-source-gtags
-                   (my-ac-config)))
+;;   (:name auto-complete-clang
+;;	  :after (progn
+;;		   (setq ac-auto-start nil)
+;;                   (setq ac-quick-help-delay 0.5)
+;;                   ;; (ac-set-trigger-key "TAB")
+;;                   ;; (define-key ac-mode-map  [(control tab)] 'auto-complete)
+;;                   (define-key ac-mode-map  [(control tab)] 'auto-complete)
+;;                   (defun my-ac-config ()
+;;                     (setq-default ac-sources '(ac-source-abbrev ac-source-dictionary ac-source-words-in-same-mode-buffers))
+;;                     (add-hook 'emacs-lisp-mode-hook 'ac-emacs-lisp-mode-setup)
+;;                     ;; (add-hook 'c-mode-common-hook 'ac-cc-mode-setup)
+;;                     (add-hook 'ruby-mode-hook 'ac-ruby-mode-setup)
+;;                     (add-hook 'css-mode-hook 'ac-css-mode-setup)
+;;                     (add-hook 'auto-complete-mode-hook 'ac-common-setup)
+;;                     (global-auto-complete-mode t))
+;;                   (defun my-ac-cc-mode-setup ()
+;;                     (setq ac-sources (append '(ac-source-clang ac-source-yasnippet) ac-sources)))
+;;                   (add-hook 'c-mode-common-hook 'my-ac-cc-mode-setup)
+;;                   ;; ac-source-gtags
+;;                   (my-ac-config)))
 
    (:name goto-last-change
 	  :after (progn
@@ -105,12 +92,10 @@
  '(el-get
    magit
    auto-complete
-   switch-window
+   ;;switch-window
    yasnippet
    ;;clang-complete-async
-   ;;auto-complete-clang
    multiple-cursors
-   smooth-scrolling
    color-theme))
 
 ;;
@@ -223,9 +208,9 @@
 ;;(global-set-key (kbd "C-x B") 'ibuffer)
 
 ;; have vertical ido completion lists
-(setq ido-decorations
-      '("\n-> " "" "\n   " "\n   ..." "[" "]"
-	" [No match]" " [Matched]" " [Not readable]" " [Too big]" " [Confirm]"))
+;; (setq ido-decorations
+;;       '("\n-> " "" "\n   " "\n   ..." "[" "]"
+;;	" [No match]" " [Matched]" " [Not readable]" " [Too big]" " [Confirm]"))
 
 ;; C-x C-j opens dired with the cursor right on the file you're editing
 (require 'dired-x)
@@ -238,7 +223,7 @@
 ;;(global-set-key [f11] 'fullscreen)
 
 ;; disable backup
-;;(setq make-backup-files nil) 
+;;(setq make-backup-files nil)
 
 ;; enable emacsclient
 (require 'server)
@@ -295,11 +280,11 @@
 (defvar my-keys-minor-mode-map ;; this will override all major bindings
   (make-keymap)
   "my-keys-minor-mode keymap.")
-(define-key my-keys-minor-mode-map (kbd "M-j") 'next-line)
-(define-key my-keys-minor-mode-map (kbd "M-k") 'previous-line)
-(define-key my-keys-minor-mode-map (kbd "M-h") 'backward-char)
-(define-key my-keys-minor-mode-map (kbd "M-e") 'forward-same-syntax)
-(define-key my-keys-minor-mode-map (kbd "M-l") 'forward-char)
+(define-key my-keys-minor-mode-map (kbd "M-d") 'next-line)
+(define-key my-keys-minor-mode-map (kbd "M-e") 'previous-line)
+(define-key my-keys-minor-mode-map (kbd "M-a") 'backward-char)
+(define-key my-keys-minor-mode-map (kbd "M-r") 'forward-same-syntax)
+(define-key my-keys-minor-mode-map (kbd "M-f") 'forward-char)
 (define-minor-mode my-keys-minor-mode
   "A minor mode so that my key settings override annoying major modes."
   t " B" 'my-keys-minor-mode-map)
@@ -324,7 +309,7 @@
   (let* ((astyle-current-line (line-number-at-pos)))
     (shell-command-on-region (point-min) (point-max)
                              "astyle" ;; add options here...
-                             (current-buffer) t 
+                             (current-buffer) t
                              (get-buffer-create "*Astyle Errors*") t)
     (goto-char (point-min)) (forward-line (1- astyle-current-line))))
 (global-set-key (kbd "C-c q") 'astyle-buffer)
@@ -351,3 +336,36 @@ vi style of % jumping to matching brace."
   (let ((compilation-disable-input t))
     (compilation-start (concat command-args " < " null-device)
                        'grep-mode)))
+
+;;;
+;; Move to beginning of word before yanking word in isearch-mode.
+;; Make C-s C-w and C-r C-w act like Vim's g* and g#, keeping Emacs'
+;; C-s C-w [C-w] [C-w]... behaviour.
+(require 'thingatpt)
+(defun my-isearch-yank-word-or-char-from-beginning ()
+  "Move to beginning of word before yanking word in isearch-mode."
+  (interactive)
+  ;; Making this work after a search string is entered by user
+  ;; is too hard to do, so work only when search string is empty.
+  (if (= 0 (length isearch-string))
+      (beginning-of-thing 'word))
+  (isearch-yank-word-or-char)
+  ;; Revert to 'isearch-yank-word-or-char for subsequent calls
+  (substitute-key-definition 'my-isearch-yank-word-or-char-from-beginning
+			     'isearch-yank-word-or-char
+			     isearch-mode-map))
+(add-hook 'isearch-mode-hook
+ (lambda ()
+   "Activate my customized Isearch word yank command."
+   (substitute-key-definition 'isearch-yank-word-or-char
+			      'my-isearch-yank-word-or-char-from-beginning
+			      isearch-mode-map)))
+
+;; show trailing whitespaces
+(setq-default show-trailing-whitespace t)
+
+;; scroll one line at a time (less "jumpy" than defaults)
+(setq mouse-wheel-scroll-amount '(3 ((shift) . 1))) ;; one line at a time
+(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
+(setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
+(setq scroll-step 1) ;; keyboard scroll one line at a time
